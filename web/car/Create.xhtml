@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CarCreateDlg" widgetVar="CarCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCarTitle}">
+            <h:form id="CarCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{carController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCarLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{carController.selected.id}" title="#{bundle.CreateCarTitle_id}" required="true" requiredMessage="#{bundle.CreateCarRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateCarLabel_color}" for="color" />
+                        <p:inputText id="color" value="#{carController.selected.color}" title="#{bundle.CreateCarTitle_color}" />
+                        <p:outputLabel value="#{bundle.CreateCarLabel_wheels}" for="wheels" />
+                        <p:inputText id="wheels" value="#{carController.selected.wheels}" title="#{bundle.CreateCarTitle_wheels}" required="true" requiredMessage="#{bundle.CreateCarRequiredMessage_wheels}"/>
+                        <p:outputLabel value="#{bundle.CreateCarLabel_weight}" for="weight" />
+                        <p:inputText id="weight" value="#{carController.selected.weight}" title="#{bundle.CreateCarTitle_weight}" />
+                        <p:outputLabel value="#{bundle.CreateCarLabel_power}" for="power" />
+                        <p:inputText id="power" value="#{carController.selected.power}" title="#{bundle.CreateCarTitle_power}" required="true" requiredMessage="#{bundle.CreateCarRequiredMessage_power}"/>
+                        <p:outputLabel value="#{bundle.CreateCarLabel_carOwner}" for="carOwner" />
+                        <p:selectOneMenu id="carOwner" value="#{carController.selected.carOwner}" required="true" requiredMessage="#{bundle.EditCarRequiredMessage_carOwner}">
+                            <f:selectItems value="#{carOwnerController.itemsAvailableSelectOne}"
+                                           var="carOwnerItem"
+                                           itemValue="#{carOwnerItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{carController.create}" value="#{bundle.Save}" update="display,:CarListForm:datalist,:growl" oncomplete="handleSubmit(args,'CarCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CarCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
